@@ -53,28 +53,99 @@ ORDER BY year ASC, month ASC;
 
 -- A list of the top 5 US states by number of invoices
 -- Hint: You'll need to filter the results with WHERE billing_country = 'USA'
+SELECT billing_state, COUNT(*)
+FROM invoices
+WHERE billing_country = "USA"
+GROUP BY billing_state
+ORDER BY COUNT(*) DESC
+LIMIT 5;
 
 -- A list of the top 5 US states by gross sales
+SELECT billing_state, SUM(total) AS gross_sales
+FROM invoices
+WHERE billing_country = "USA"
+GROUP BY billing_state
+ORDER BY gross_sales DESC
+LIMIT 5;
 
 -- A list of the top 5 US states by average invoice size
+SELECT billing_state, AVG(total)
+FROM invoices
+WHERE billing_country = "USA"
+GROUP BY billing_state
+ORDER BY AVG(total) DESC
+LIMIT 5;
 
 -- A list of the top 10 US cities by number of invoices
+SELECT billing_city, COUNT(*)
+FROM invoices
+WHERE billing_country = "USA"
+GROUP BY billing_city
+ORDER BY COUNT(*) DESC
+LIMIT 10;
 
 -- A list of the top 10 US cities by gross sales
+SELECT billing_city,
+       SUM(total) AS gross_sales
+FROM invoices
+WHERE billing_country = "USA"
+GROUP BY billing_city
+ORDER BY gross_sales DESC
+LIMIT 10;
 
 -- A list of the top 10 US cities by average invoice size
+SELECT billing_city,
+       AVG(total) AS avg_invoice_size
+FROM invoices
+WHERE billing_country = "USA"
+GROUP BY billing_city
+ORDER BY avg_invoice_size DESC
+LIMIT 10;
 
 -- A list of the top 3 cities in California by number of invoices
 -- Hint: You'll need a WHERE clause filtering by both billing_country and billing_state
+SELECT billing_city,
+       COUNT(*) AS num_invoices
+FROM invoices
+WHERE billing_country = "USA" AND
+      billing_state = "CA"
+GROUP BY billing_city
+ORDER BY num_invoices DESC
+LIMIT 3;
 
 -- A list of the top 3 cities in California by gross sales
+SELECT billing_city,
+       SUM(total) AS gross_sales
+FROM invoices
+WHERE billing_country = "USA"
+      AND billing_state = "CA"
+GROUP BY billing_city
+ORDER BY gross_sales DESC
+LIMIT 3;
 
 -- A list of the top 3 cities in California by average invoice size
-
+SELECT billing_city,
+       AVG(total) AS avg_invoice_size
+FROM invoices
+WHERE billing_country = "USA"
+      AND billing_state = "CA"
+GROUP BY billing_city
+ORDER BY avg_invoice_size DESC
+LIMIT 3;
 
 -- "customers" table
 -- Remember: run ".schema customers" to see what fields (columns) the customers table contains.
 
 -- A list of the top 3 countries by total number of customers
+SELECT country, COUNT(*) AS num_customers
+FROM customers
+GROUP BY country
+ORDER BY num_customers DESC
+LIMIT 3;
 
 -- A list of the top 7 cities (anywhere) by total number of customers
+SELECT city, COUNT(*) AS num_customers
+FROM customers
+GROUP BY city
+ORDER BY num_customers DESC
+LIMIT 7;
