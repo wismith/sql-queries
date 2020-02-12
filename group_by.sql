@@ -53,15 +53,17 @@ ORDER BY year ASC, month ASC;
 
 -- A list of the top 5 US states by number of invoices
 -- Hint: You'll need to filter the results with WHERE billing_country = 'USA'
-SELECT billing_state, COUNT(*)
+SELECT billing_state,
+       COUNT(*) AS num_invoices
 FROM invoices
 WHERE billing_country = "USA"
 GROUP BY billing_state
-ORDER BY COUNT(*) DESC
+ORDER BY num_invoices DESC
 LIMIT 5;
 
 -- A list of the top 5 US states by gross sales
-SELECT billing_state, SUM(total) AS gross_sales
+SELECT billing_state,
+       SUM(total) AS gross_sales
 FROM invoices
 WHERE billing_country = "USA"
 GROUP BY billing_state
@@ -69,19 +71,21 @@ ORDER BY gross_sales DESC
 LIMIT 5;
 
 -- A list of the top 5 US states by average invoice size
-SELECT billing_state, AVG(total)
+SELECT billing_state,
+       AVG(total) AS avg_invoice_size
 FROM invoices
 WHERE billing_country = "USA"
 GROUP BY billing_state
-ORDER BY AVG(total) DESC
+ORDER BY avg_invoice_size DESC
 LIMIT 5;
 
 -- A list of the top 10 US cities by number of invoices
-SELECT billing_city, COUNT(*)
+SELECT billing_city,
+       COUNT(*) AS num_invoices
 FROM invoices
 WHERE billing_country = "USA"
 GROUP BY billing_city
-ORDER BY COUNT(*) DESC
+ORDER BY num_invoices DESC
 LIMIT 10;
 
 -- A list of the top 10 US cities by gross sales
@@ -137,7 +141,8 @@ LIMIT 3;
 -- Remember: run ".schema customers" to see what fields (columns) the customers table contains.
 
 -- A list of the top 3 countries by total number of customers
-SELECT country, COUNT(*) AS num_customers
+SELECT country,
+       COUNT(*) AS num_customers
 FROM customers
 GROUP BY country
 ORDER BY num_customers DESC
