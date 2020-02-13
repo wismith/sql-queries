@@ -39,17 +39,72 @@
 --
 
 -- What are the five highest grossing hip hop tracks?
-
+SELECT tracks.id, tracks.name, tracks.genre_id,
+       SUM(invoice_lines.unit_price * invoice_lines.quantity) AS gross_sales,
+       SUM(invoice_lines.quantity) AS total_sold
+FROM tracks
+JOIN genres ON (genres.id = tracks.genre_id)
+JOIN invoice_lines ON (invoice_lines.track_id = tracks.id)
+WHERE genres.name = "Hip Hop/Rap"
+GROUP BY tracks.id
+ORDER BY gross_sales DESC
+LIMIT 5;
 -- What are the 3 least frequently-purchased tv shows?
-
+SELECT tracks.id, tracks.name, genres.name AS genre,
+       SUM(invoice_lines.quantity) AS purchases
+FROM tracks
+JOIN genres ON (genres.id = tracks.genre_id)
+JOIN invoice_lines ON (invoice_lines.track_id = tracks.id)
+WHERE genres.name = "TV Shows"
+GROUP BY tracks.id
+ORDER BY purchases
+LIMIT 3;
 -- What are the 5 highest-grossing genres?
+SELECT genres.name AS genre,
+       SUM(invoice_lines.quantity * invoice_lines.unit_price) AS gross_sales
+FROM genres
+JOIN tracks ON (tracks.genre_id = genres.id)
+JOIN invoice_lines ON (invoice_lines.track_id = tracks.id)
+GROUP BY genres.id
+ORDER BY gross_sales DESC
+LIMIT 5;
 
 -- Who are the 5 artists with the longest average track length?
-
+SELECT artists.name AS artist_name,
+       AVG(tracks.milliseconds) AS avg_track_length
+FROM artists
+JOIN albums ON (albums.artist_id = artists.id)
+JOIN tracks ON (tracks.album_id = albums.id)
+JOIN genres ON (genres.id = tracks.genre_id)
+GROUP BY artists.id
+ORDER BY avg_track_length DESC
+LIMIT 5;
 -- Write a query that sorts a specific album's tracks by sales volume (you'll have to pick an arbitrary album title)
 --   e.g., "Give me the the tracks from Alanis Morissette's Jagged Little Pilled sorted by sales volume"
+SELECT tracks.name AS track_name,
+       SUM(invoice_lines.quantity) AS sales_volume,
+       albums.title AS album,
+       artists.name AS artist_name
+FROM tracks
+JOIN albums ON (albums.id = tracks.album_id)
+JOIN invoice_lines ON (invoice_lines.track_id = tracks.id)
+JOIN artists ON (artists.id = albums.artist_id)
+WHERE albums.title = "Led Zeppelin I"
+GROUP BY tracks.id
+ORDER BY sales_volume DESC;
 
 -- Write a query that sorts a specific album's tracks by gross sales (you'll have to pick an arbitrary album title)
+SELECT tracks.name AS track_name,
+       SUM(invoice_lines.quantity * invoice_lines.unit_price) AS gross_sales,
+       albums.title AS album,
+       artists.name AS artist
+FROM tracks
+JOIN invoice_lines ON (invoice_lines.track_id = tracks.id)
+JOIN albums ON (albums.id = tracks.album_id)
+JOIN artists ON (artists.id = albums.artist_id)
+WHERE albums.title = "Led Zeppelin II"
+GROUP BY tracks.id
+ORDER BY gross_sales DESC;
 
 -- How would you handle the case where two different artists have albums with the same name?
 --   e.g., sometimes both Peter Gabriel's first album and Led Zeppelin's first album are referred to as "One" or "I"
