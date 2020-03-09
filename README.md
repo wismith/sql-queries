@@ -12,7 +12,10 @@ We've set up our own PostgreSQL server that you'll be connecting to.
 
 - [Contents](#Contents)
 - [Exercises](#Exercises)
-- [PostgreSQL](#PostgreSQL)
+- [Installing PostgreSQL](#Installing-PostgreSQL)
+  - [Mac](#Mac)
+  - [Windows](#Windows)
+- [Using PostgreSQL](#Using-PostgreSQL)
   - [Connecting To PostgreSQL](#Connecting-To-PostgreSQL)
   - [Exiting The PostgreSQL Shell](#Exiting-The-PostgreSQL-Shell)
 - [The Database Tables](#The-Database-Tables)
@@ -32,7 +35,41 @@ The exercises are contained in individual `.sql` files. They are meant to be com
 1. `left_join.sql` — Two-table queries using `LEFT JOIN`
 1. `multi_join.sql` — Queries against more than two tables simultaneously
 
-## PostgreSQL
+## Installing PostgreSQL
+
+### Mac
+
+You can install PostgreSQL on a Mac with `brew`:
+
+```console
+brew install postgresql
+```
+
+Once installed, start the database server with
+
+```console
+brew services start postgresql
+```
+
+### Windows
+
+You can install PostgreSQL on Windows using [Chocolatey's][url-chocolatey] `choco` command:
+
+```console
+choco install postgresql
+```
+
+See the [Chocolatey PostgreSQL package page][url-chocolatey-postgresql] for more details.
+
+Once installed, you have to add PostgreSQL's `bin` directory to your PATH environment variable. Search for *Edit system environment variable* to open *System Properties*. From there, click the *Environment Variables* button.
+
+Under *User variables*, click the row labeled *Path* and then click the *Edit...* button. Click *New* and add the following directory to the PATH environment variable:
+
+```text
+C:\Program Files\PostgreSQL\12\bin
+```
+
+## Using PostgreSQL
 
 ### Connecting To PostgreSQL
 
