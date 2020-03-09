@@ -2,9 +2,7 @@
 
 Here is a toy database which models an online music store.  In this database, we have falling into three categories: information about the company, information about customers and their orders, and information about the products being sold.
 
-You'll be editing the `queries.sql` file, which consists of a series of
-"plain English" sentences.  Your job is to translate those sentences into a
-single SQL `SELECT` query.  Don't worry if you can't do it — take your best shot!
+You'll be editing the `queries.sql` file, which consists of a series of "plain English" sentences.  Your job is to translate those sentences into a single SQL `SELECT` query.  Don't worry if you can't do it — take your best shot!
 
 We've set up our own PostgreSQL server that you'll be connecting to.
 
